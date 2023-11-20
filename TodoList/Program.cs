@@ -1,6 +1,7 @@
 ﻿
 //  Todo-list application
 
+using System.Threading.Channels;
 using TodoApp;
 
 const ConsoleColor YELLOW = ConsoleColor.Yellow;
@@ -12,9 +13,39 @@ const ConsoleColor RED = ConsoleColor.Red;
 var list = new TodoList();
 PopulateList();
 
-ShowList();
+
+while (true)
+{
+    Print(GRAY, "(N)  Ny todo\n" +
+                "(V)  Visa listan\n" +
+                "(R)  Radera listan\n" +
+                "(M)  Modifiera todo\n" +
+                "(S)  Sök i listan\n" +
+                "(L)  Läs lista från disk\n" +
+                "(A)  Spara aktuell lista och avsluta\n");
+
+    while (true)
+    {
+        Print(GRAY, "Ditt val: "); 
+        var val = Console.ReadLine().Trim().ToUpper();
+
+        if (val == "N") { NewTodo(); break; }
+        if (val == "V") { ShowList(); break; }
+        if (val == "R") { EraseList(); break; }
+        if (val == "M") { EditTodo(); break; }
+        if (val == "S") { SearchTodo(); break; }
+        if (val == "L") { LoadList(); break; }
+        if (val == "A") { SaveList(); return 0; }
+    }
+}
 
 
+void NewTodo() { }
+void EraseList() { }
+void EditTodo() { }
+void SearchTodo() { }
+void LoadList() { }
+void SaveList() { }
 
 
 void Print(ConsoleColor c, object s)
