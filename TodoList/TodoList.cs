@@ -15,7 +15,11 @@ namespace TodoApp
 
         public void RemoveTodo(int n)  =>  Items.RemoveAt(n);
 
-        public void AddTodo(TodoItem t)  =>  Items.Add(t);
+        public void AddTodo(TodoItem t, bool d = false)
+        {
+            t.IsDone = d;
+            Items.Add(t);
+        }
 
         public IEnumerator GetEnumerator()  =>  Items.GetEnumerator();
     }

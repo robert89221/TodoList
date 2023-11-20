@@ -15,6 +15,19 @@ namespace TodoApp
 
         public TodoItem(string t, string c, DateOnly d)  =>  (Text, Category, Date, IsDone) = (t, c, d, false);
 
-        override public string ToString()  =>  $"{Date,12}{Category,10}{Text,30}";
+        override public string ToString()
+        {
+            string dateString;
+
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var tomorrow = today.AddDays(1);
+
+            if (IsDone)                   dateString = "Färdigt";
+            else if (Date == today)       dateString = "Idag";
+            else if (Date == tomorrow)    dateString = "Imorgon";
+            else                          dateString = Date.ToString();
+
+            return $"{dateString,-10}  {Category,-10}  {Text,-30}";
+        }
     }
 }
