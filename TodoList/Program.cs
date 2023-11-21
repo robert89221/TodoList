@@ -40,8 +40,19 @@ while (true)
 }
 
 
-void NewTodo() { }
-void EraseList() { }
+void NewTodo()
+{
+
+}
+
+
+void EraseList()
+{
+    list.EraseList();
+    PrintLine(GRAY, "Listan har raderats");
+}
+
+
 void EditTodo() { }
 void SearchTodo() { }
 void LoadList() { }
@@ -64,11 +75,17 @@ void PrintLine(ConsoleColor c, object s)
 
 List<int> ShowList()
 {
-    PrintLine(GRAY, "\n    Datum       Kategori    Beskrivning\n");
-
     var today = DateOnly.FromDateTime(DateTime.Today);
     var indices = new List<int>() { 0 };
     var taskNum = 1;
+
+    if (list.Length == 0)
+    {
+        PrintLine(GRAY, "Listan är tom");
+        return indices;
+    }
+
+    PrintLine(GRAY, "\n    Datum       Kategori    Beskrivning\n");
 
     var query = from TodoItem item in list
                 where item.IsDone == false

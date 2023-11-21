@@ -9,8 +9,9 @@ namespace TodoApp
 {
     internal class TodoList:IEnumerable
     {
-        private List<TodoItem> Items { get; }
+        private List<TodoItem> Items { get; set; }
         private int idCount { get; set; }
+        public int Length { get  =>  (int)Items.LongCount(); }
 
         public TodoList()
         {
@@ -19,6 +20,8 @@ namespace TodoApp
         }
 
         public void RemoveTodo(int n)  =>  Items.RemoveAt(n);
+
+        public void EraseList()  =>  Items = new List<TodoItem>();
 
         public void AddTodo(TodoItem t, bool d = false)
         {
