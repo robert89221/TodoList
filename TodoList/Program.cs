@@ -22,7 +22,7 @@ while (true)
                 "(M)  Modifiera todo\n" +
                 "(S)  Sök i listan\n" +
                 "(L)  Läs lista från disk\n" +
-                "(A)  Spara aktuell lista och avsluta\n");
+                "(A)  Spara aktuell lista och avsluta\n\n");
 
     while (true)
     {
@@ -49,7 +49,7 @@ void NewTodo()
 void EraseList()
 {
     list.EraseList();
-    PrintLine(GRAY, "Listan har raderats");
+    PrintLine(RED, "Listan har raderats");
 }
 
 
@@ -88,34 +88,19 @@ List<int> ShowList()
     PrintLine(GRAY, "\n    Datum       Kategori    Beskrivning\n");
 
     var query = from TodoItem item in list
-                where item.IsDone == false
-                orderby item.Date, item.Category
+                orderby item.IsDone, item.Date, item.Category
                 select item;
 
     foreach (var result in query)
     {
         ConsoleColor col;
 
-        if (result.Date == today) col = YELLOW;
+        if (result.IsDone) col = GREEN;
+        else if (result.Date == today) col = YELLOW;
         else if (result.Date < today) col = RED;
         else col = GRAY;
 
         PrintLine(col, $"{taskNum,2}  {result}");
-
-        indices.Add(result.ID);
-        ++taskNum;
-    }
-
-    Console.WriteLine();
-
-    query = from TodoItem item in list
-            where item.IsDone == true
-            orderby item.Date, item.Category
-            select item;
-
-    foreach (var result in query)
-    {
-        PrintLine(GREEN, $"{taskNum,2}  {result}");
 
         indices.Add(result.ID);
         ++taskNum;
