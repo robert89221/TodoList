@@ -2,6 +2,7 @@
 //  Todo-list application
 
 using System.Threading.Channels;
+using System.Xml.Serialization;
 using TodoApp;
 
 const ConsoleColor YELLOW = ConsoleColor.Yellow;
@@ -54,7 +55,34 @@ void EraseList()
 
 
 void EditTodo() { }
-void SearchTodo() { }
+
+
+void SearchTodo()
+{
+    Print(GRAY, "Skriv in sökord: ");
+    var terms = Console.ReadLine().Trim().ToLower().Split();
+
+    var today = DateOnly.FromDateTime(DateTime.Today);
+
+    var query = from TodoItem item in list
+                where terms.Any((item.Category+" "+item.Text).ToLower().Contains)
+                orderby item.IsDone, item.Date, item.Category
+                select item;
+
+    foreach (var result in query)
+    {
+        ConsoleColor col;
+
+        if (result.IsDone) col = GREEN;
+        else if (result.Date == today) col = YELLOW;
+        else if (result.Date < today) col = RED;
+        else col = GRAY;
+
+        PrintLine(col, result);
+    }
+}
+
+
 void LoadList() { }
 void SaveList() { }
 
