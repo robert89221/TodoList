@@ -12,6 +12,7 @@ namespace TodoApp
         public string Category { get; set; }
         public DateOnly Date { get; set; }
         public bool IsDone { get; set; }
+        public int ID { get; set; }
 
         public TodoItem(string t, string c, DateOnly d)  =>  (Text, Category, Date, IsDone) = (t, c, d, false);
 
@@ -27,7 +28,7 @@ namespace TodoApp
             else if (Date == tomorrow)    dateString = "Imorgon";
             else                          dateString = Date.ToString();
 
-            return $"{dateString,-10}  {Category,-10}  {Text,-30}";
+            return $"{dateString,-10}  {Category,-10}  {Text,-50}";
         }
     }
 }

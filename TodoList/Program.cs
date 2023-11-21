@@ -62,11 +62,13 @@ void PrintLine(ConsoleColor c, object s)
 }
 
 
-void ShowList()
+List<int> ShowList()
 {
-    PrintLine(GRAY, "\nAtt göra:\n\nDatum       Kategori    Beskrivning\n");
+    PrintLine(GRAY, "\n    Datum       Kategori    Beskrivning\n");
 
     var today = DateOnly.FromDateTime(DateTime.Today);
+    var indices = new List<int>() { 0 };
+    var taskNum = 1;
 
     var query = from TodoItem item in list
                 where item.IsDone == false
@@ -81,7 +83,10 @@ void ShowList()
         else if (result.Date < today) col = RED;
         else col = GRAY;
 
-        PrintLine(col, result);
+        PrintLine(col, $"{taskNum,2}  {result}");
+
+        indices.Add(result.ID);
+        ++taskNum;
     }
 
     Console.WriteLine();
@@ -91,7 +96,16 @@ void ShowList()
             orderby item.Date, item.Category
             select item;
 
-    foreach (var result in query)    PrintLine(GREEN, result);
+    foreach (var result in query)
+    {
+        PrintLine(GREEN, $"{taskNum,2}  {result}");
+
+        indices.Add(result.ID);
+        ++taskNum;
+    }
+
+    Console.WriteLine();
+    return indices;
 }
 
 
