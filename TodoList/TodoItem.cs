@@ -23,7 +23,7 @@ namespace TodoApp
             var today = DateOnly.FromDateTime(DateTime.Today);
             var tomorrow = today.AddDays(1);
 
-            if (IsDone)                   dateString = "Färdigt";
+            if (IsDone)                   dateString = "Klar";
             else if (Date == today)       dateString = "Idag";
             else if (Date == tomorrow)    dateString = "Imorgon";
             else                          dateString = Date.ToString();

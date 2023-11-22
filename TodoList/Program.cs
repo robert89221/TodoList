@@ -1,6 +1,7 @@
 ﻿
 //  Todo-list application
 
+using System.Linq.Expressions;
 using System.Threading.Channels;
 using System.Xml.Serialization;
 using TodoApp;
@@ -17,18 +18,20 @@ PopulateList();
 
 while (true)
 {
-    Print(GRAY, "(N)  Ny todo\n" +
-                "(V)  Visa listan\n" +
-                "(R)  Radera listan\n" +
-                "(M)  Modifiera todo\n" +
-                "(S)  Sök i listan\n" +
-                "(L)  Läs lista från disk\n" +
-                "(A)  Spara aktuell lista och avsluta\n\n");
+    PrintLine(GRAY, """
+        (N)  Ny todo
+        (V)  Visa listan
+        (R)  Radera listan
+        (M)  Modifiera todo
+        (S)  Sök i listan
+        (L)  Läs lista från disk
+        (A)  Spara aktuell lista och avsluta
+        """);
 
     while (true)
     {
         Print(GRAY, "Ditt val: "); 
-        var val = Console.ReadLine().Trim().ToUpper();
+        var val = Console.ReadLine()!.Trim().ToUpper();
 
         if (val == "N") { NewTodo(); break; }
         if (val == "V") { ShowList(); break; }
@@ -54,13 +57,48 @@ void EraseList()
 }
 
 
-void EditTodo() { }
+void EditTodo()
+{
+    var taskMap = ShowList();
+
+    while (true)
+    {
+        PrintLine(GRAY, """
+            (Ä)  Ändra datum, kategori, beskrivning
+            (M)  Markera/Avmarkera som klar
+            (R)  Radera todo
+            (A)  Gå till huvudmenyn
+            """);
+
+        while (true)
+        {
+            Print(GRAY, "Ditt val: ");
+            var val = Console.ReadLine()!.Trim().ToUpper();
+
+            if (val == "Ä")
+            {
+                Print(GRAY, "Välj en todo att ändra: ");
+                var num = Console.ReadLine()!.Trim().ToUpper();
+
+                if (num == "") break;
+
+            }
+            else if (val == "M") { break; }
+            else if (val == "R") { break; }
+            else if (val == "A") { return; }
+        }
+
+    }
+
+}
 
 
 void SearchTodo()
 {
     Print(GRAY, "Skriv in sökord: ");
-    var terms = Console.ReadLine().Trim().ToLower().Split();
+    var terms = Console.ReadLine()!.Trim().ToLower().Split();
+
+    if (terms[0] == "")    return;
 
     var today = DateOnly.FromDateTime(DateTime.Today);
 
