@@ -22,7 +22,7 @@
                 <GridView>
                     <GridViewColumn Header="Date" Width="80" DisplayMemberBinding="{Binding DateString}" />
                     <GridViewColumn Header="Category" Width="100" DisplayMemberBinding="{Binding Category}" />
-                    <GridViewColumn Header="Description" Width="490" DisplayMemberBinding="{Binding Description}" />
+                    <GridViewColumn Header="Description" Width="470" DisplayMemberBinding="{Binding Description}" />
                 </GridView>
             </ListView.View>
         </ListView>
