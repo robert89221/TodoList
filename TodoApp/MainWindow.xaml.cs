@@ -89,9 +89,24 @@ namespace TodoApp
 
         private void bt_NewTodo_Click(object sender, RoutedEventArgs e)
         {
-            var dt = DateOnly.FromDateTime(dp_Date.DisplayDate);
+            var dt = DateOnly.FromDateTime(dp_Date.SelectedDate ?? DateTime.Today);
             list.Add(new TodoItem(tb_Description.Text, tb_Category.Text, dt));
             lv_List.Items.Refresh();
+        }
+
+
+        private void lv_List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lv_List.SelectedItems.Count == 1)
+            {
+                tb_Category.Text = (lv_List.SelectedItems[0] as TodoItem)!.Category;
+                tb_Description.Text = (lv_List.SelectedItems[0] as TodoItem)!.Description;
+                dp_Date.SelectedDate = (lv_List.SelectedItems[0] as TodoItem)!.Date.ToDateTime(TimeOnly.MinValue);
+
+            } else {
+
+                tb_Category.Text = tb_Description.Text = "";
+            }
         }
     }
 }
