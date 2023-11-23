@@ -1,5 +1,8 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.Design.Serialization;
+using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -28,7 +31,7 @@ namespace TodoApp
 
             //list = new TodoList();
             list = new List<TodoItem>();
-            PopulateList();
+            //PopulateList();
             list.Sort();
 
             lv_List.ItemsSource = list;
@@ -140,6 +143,62 @@ namespace TodoApp
             }
 
             lv_List.Items.Refresh();
+        }
+
+        private void bt_SaveList_Click(object sender, RoutedEventArgs e)
+        {
+            if (list.Count == 0)    return;
+
+            var dlg = new SaveFileDialog();
+            dlg.Filter = "ToDo List|*.tod|All Files|*.*";
+            dlg.Title = "Save ToDo List";
+            dlg.ShowDialog();
+
+            using (var stream = new StreamWriter(dlg.OpenFile()))
+            {
+                stream.WriteLine(list.Count);
+
+                foreach (var item in list)
+                {
+                    stream.WriteLine(item.IsDone);
+                    stream.WriteLine(item.Date);
+                    stream.WriteLine(item.Category);
+                    stream.WriteLine(item.Description);
+                }
+            }                
+        }
+
+
+        private void bt_LoadList_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog();
+            dlg.Filter = "ToDo List|*.tod|All Files|*.*";
+            dlg.Title = "Load ToDo List";
+            dlg.Multiselect = false;
+            dlg.CheckFileExists = true;
+            dlg.ShowDialog();
+
+            using (var stream = new StreamReader(dlg.OpenFile()))
+            {
+                int count = Convert.ToInt32(stream.ReadLine());
+                var newList = new List<TodoItem>();
+
+                for (int n = 0; n < count; ++n)
+                {
+                    var done = Convert.ToBoolean(stream.ReadLine());
+                    var date = DateOnly.FromDateTime(Convert.ToDateTime(stream.ReadLine()));
+                    var cat = stream.ReadLine();
+                    var desc = stream.ReadLine();
+
+                    newList.Add(new TodoItem(desc!, cat!, date, done));
+                }
+
+                list = newList;
+                lv_List.ItemsSource = list;
+                lv_List.Items.Filter = null;
+                tb_Search.Text = "";
+                lv_List.Items.Refresh();
+            }
         }
     }
 }

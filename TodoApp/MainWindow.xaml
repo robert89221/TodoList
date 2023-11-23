@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="ToDo" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Grid Width="800" Height="500">
-        <Button x:Name="bt_LoadList" Content="Load List" HorizontalAlignment="Left" Margin="706,165,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
+        <Button x:Name="bt_LoadList" Content="Load List" HorizontalAlignment="Left" Margin="706,165,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="bt_LoadList_Click"/>
         <TextBox x:Name="tb_Category" HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="Wrap" Text="Category" VerticalAlignment="Top" Width="160" Height="30" VerticalContentAlignment="Center"/>
         <TextBox x:Name="tb_Description" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top" Width="680" Height="30" VerticalContentAlignment="Center" Cursor=""/>
         <DatePicker x:Name="dp_Date" HorizontalAlignment="Left" Margin="175,45,0,0" VerticalAlignment="Top" Width="120" Height="30" VerticalContentAlignment="Center"/>
-        <Button x:Name="bt_SaveList" Content="Save List" HorizontalAlignment="Left" Margin="706,199,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
+        <Button x:Name="bt_SaveList" Content="Save List" HorizontalAlignment="Left" Margin="706,199,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="bt_SaveList_Click"/>
         <Button x:Name="bt_ClearList" Content="Clear List" HorizontalAlignment="Left" Margin="706,0,0,0" VerticalAlignment="Center" Width="80" Height="30" Click="bt_ClearList_Click"/>
         <Button x:Name="bt_Search" Content="Search" HorizontalAlignment="Left" Margin="706,80,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="bt_Search_Click"/>
         <Button x:Name="bt_NewTodo" Content="New ToDo" HorizontalAlignment="Left" Margin="706,10,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="bt_NewTodo_Click"/>
