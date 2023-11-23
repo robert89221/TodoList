@@ -21,7 +21,6 @@ namespace TodoApp
             }
         }
         public bool IsDone { get; set; }
-        public int ID { get; set; }
 
         public TodoItem(string d, string c, DateOnly date, bool done = false) => (Description, Category, Date, IsDone) = (d, c, date, done);
         
@@ -32,19 +31,5 @@ namespace TodoApp
             return a.CompareTo(b);
         }
         
-        override public string ToString()
-        {
-            string dateString;
-
-            var today = DateOnly.FromDateTime(DateTime.Today);
-            var tomorrow = today.AddDays(1);
-
-            if (IsDone)                   dateString = "Klar";
-            else if (Date == today)       dateString = "Idag";
-            else if (Date == tomorrow)    dateString = "Imorgon";
-            else                          dateString = Date.ToString();
-
-            return $"{dateString,-10}  {Category,-10}  {Description,-50}";
-        }
     }
 }
