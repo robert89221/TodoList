@@ -23,7 +23,7 @@ namespace TodoApp
         public bool IsDone { get; set; }
         public int ID { get; set; }
 
-        public TodoItem(string d, string c, DateOnly date)  =>  (Description, Category, Date, IsDone) = (d, c, date, false);
+        public TodoItem(string d, string c, DateOnly date, bool done = false)  =>  (Description, Category, Date, IsDone) = (d, c, date, done);
 
         override public string ToString()
         {
