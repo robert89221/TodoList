@@ -16,7 +16,7 @@
         <Button x:Name="bt_Search" Content="Search" HorizontalAlignment="Left" Margin="706,80,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
         <Button x:Name="bt_NewTodo" Content="New ToDo" HorizontalAlignment="Left" Margin="706,10,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
         <Button x:Name="bt_MarkDone" Content="Mark Done" HorizontalAlignment="Left" Margin="706,45,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
-        <Button x:Name="bt_Delete" Content="Delete" HorizontalAlignment="Left" Margin="706,115,0,0" VerticalAlignment="Top" Width="80" Height="30"/>
+        <Button x:Name="bt_Delete" Content="Delete" HorizontalAlignment="Left" Margin="706,115,0,0" VerticalAlignment="Top" Width="80" Height="30" Click="bt_Delete_Click"/>
         <ListView x:Name="lv_List" Margin="10,80,110,10" d:ItemsSource="{d:SampleData ItemCount=3}">
             <ListView.View>
                 <GridView>

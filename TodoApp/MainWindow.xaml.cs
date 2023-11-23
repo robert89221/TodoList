@@ -69,5 +69,12 @@ namespace TodoApp
             list.Clear();
             lv_List.Items.Refresh();
         }
+
+
+        private void bt_Delete_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TodoItem item in lv_List.SelectedItems)    list.Remove(item);
+            lv_List.Items.Refresh();
+        }
     }
 }
