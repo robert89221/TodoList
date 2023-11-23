@@ -8,13 +8,22 @@ namespace TodoApp
 {
     internal class TodoItem
     {
-        public string Text { get; set; }
+        public string Description { get; set; }
         public string Category { get; set; }
         public DateOnly Date { get; set; }
+        public string DateString
+        {
+            get
+            {
+                if (IsDone) return "Done";
+                else if (Date == DateOnly.FromDateTime(DateTime.Today)) return "Today";
+                else return Date.ToString();
+            }
+        }
         public bool IsDone { get; set; }
         public int ID { get; set; }
 
-        public TodoItem(string t, string c, DateOnly d)  =>  (Text, Category, Date, IsDone) = (t, c, d, false);
+        public TodoItem(string d, string c, DateOnly date)  =>  (Description, Category, Date, IsDone) = (d, c, date, false);
 
         override public string ToString()
         {
@@ -28,7 +37,7 @@ namespace TodoApp
             else if (Date == tomorrow)    dateString = "Imorgon";
             else                          dateString = Date.ToString();
 
-            return $"{dateString,-10}  {Category,-10}  {Text,-50}";
+            return $"{dateString,-10}  {Category,-10}  {Description,-50}";
         }
     }
 }
