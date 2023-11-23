@@ -76,5 +76,12 @@ namespace TodoApp
             foreach (TodoItem item in lv_List.SelectedItems)    list.Remove(item);
             lv_List.Items.Refresh();
         }
+
+
+        private void bt_MarkDone_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (TodoItem item in lv_List.SelectedItems)    item.IsDone = !item.IsDone;
+            lv_List.Items.Refresh();
+        }
     }
 }
