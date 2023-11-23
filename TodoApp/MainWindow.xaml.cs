@@ -27,6 +27,8 @@ namespace TodoApp
             list = new List<TodoItem>();
             PopulateList();
             lv_List.ItemsSource = list;
+
+            dp_Date.SelectedDate = DateTime.Today;
         }
 
 
@@ -81,6 +83,14 @@ namespace TodoApp
         private void bt_MarkDone_Click(object sender, RoutedEventArgs e)
         {
             foreach (TodoItem item in lv_List.SelectedItems)    item.IsDone = !item.IsDone;
+            lv_List.Items.Refresh();
+        }
+
+
+        private void bt_NewTodo_Click(object sender, RoutedEventArgs e)
+        {
+            var dt = DateOnly.FromDateTime(dp_Date.DisplayDate);
+            list.Add(new TodoItem(tb_Description.Text, tb_Category.Text, dt));
             lv_List.Items.Refresh();
         }
     }
