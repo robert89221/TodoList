@@ -82,7 +82,13 @@ namespace TodoApp
 
         private void bt_MarkDone_Click(object sender, RoutedEventArgs e)
         {
-            foreach (TodoItem item in lv_List.SelectedItems)    item.IsDone = !item.IsDone;
+            //  markera först alla som klara, sedan som oklara
+
+            var query = from TodoItem item in lv_List.SelectedItems select item;
+            var newState = query.All(item => item.IsDone) ? false : true;
+
+            foreach (var item in query)    item.IsDone = newState;
+
             lv_List.Items.Refresh();
         }
 
