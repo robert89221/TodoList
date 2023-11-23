@@ -82,7 +82,7 @@ namespace TodoApp
 
         private void bt_MarkDone_Click(object sender, RoutedEventArgs e)
         {
-            //  markera först alla som klara, sedan som oklara
+            //  markera först alla som färdiga, sedan som ej färdiga
 
             var query = from TodoItem item in lv_List.SelectedItems select item;
             var newState = query.All(item => item.IsDone) ? false : true;
@@ -97,6 +97,8 @@ namespace TodoApp
         {
             var dt = DateOnly.FromDateTime(dp_Date.SelectedDate ?? DateTime.Today);
             list.Add(new TodoItem(tb_Description.Text, tb_Category.Text, dt));
+
+            lv_List.SelectedItem = list.Last();
             lv_List.Items.Refresh();
         }
 
