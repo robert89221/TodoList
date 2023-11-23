@@ -116,5 +116,14 @@ namespace TodoApp
                 tb_Category.Text = tb_Description.Text = "";
             }
         }
+
+
+        private void bt_Search_Click(object sender, RoutedEventArgs e)
+        {
+            var words = tb_Search.Text.Trim().ToLower().Split();
+
+            lv_List.Items.Filter = item => words.Any(((item as TodoItem)!.Description + " " + (item as TodoItem)!.Category).ToLower().Contains);
+            lv_List.Items.Refresh();
+        }
     }
 }
