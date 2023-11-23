@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TodoApp
 {
-    internal class TodoItem
+    internal class TodoItem : IComparable<TodoItem>
     {
         public string Description { get; set; }
         public string Category { get; set; }
@@ -23,8 +23,15 @@ namespace TodoApp
         public bool IsDone { get; set; }
         public int ID { get; set; }
 
-        public TodoItem(string d, string c, DateOnly date, bool done = false)  =>  (Description, Category, Date, IsDone) = (d, c, date, done);
-
+        public TodoItem(string d, string c, DateOnly date, bool done = false) => (Description, Category, Date, IsDone) = (d, c, date, done);
+        
+        public int CompareTo(TodoItem? that)
+        {
+            var a = $"{this.IsDone}{this.Date}{this.Category}";
+            var b = $"{that!.IsDone}{that!.Date}{that!.Category}";
+            return a.CompareTo(b);
+        }
+        
         override public string ToString()
         {
             string dateString;

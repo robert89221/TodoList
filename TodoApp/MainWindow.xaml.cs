@@ -1,4 +1,7 @@
-﻿using System.Text;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,6 +29,8 @@ namespace TodoApp
             //list = new TodoList();
             list = new List<TodoItem>();
             PopulateList();
+            list.Sort();
+
             lv_List.ItemsSource = list;
 
             dp_Date.SelectedDate = DateTime.Today;
@@ -51,17 +56,15 @@ namespace TodoApp
                         list.AddTodo(new TodoItem("gå ut med hunden", "Husdjur", today.AddDays(0)), true);
               */
             list.Add(new TodoItem("fixa mat", "Mat", today.AddDays(0)));
+            list.Add(new TodoItem("köp ny bil", "Bil", today.AddDays(3)));
             list.Add(new TodoItem("städa", "Hem", today.AddDays(1)));
             list.Add(new TodoItem("ring bengt", "Kompisar", today.AddDays(1)));
             list.Add(new TodoItem("ring olle angående bilen", "Kompisar", today.AddDays(1)));
-            list.Add(new TodoItem("köp ny bil", "Bil", today.AddDays(3)));
             list.Add(new TodoItem("köp ny cykel", "Cykel", today.AddDays(10)));
-            list.Add(new TodoItem("förnya pendlingskortet", "Jobb", today.AddDays(21)));
-            list.Add(new TodoItem("mickes födelsedag", "Kompisar", today.AddDays(85)));
-
-            list.Add(new TodoItem("köp kattmat", "Husdjur", today.AddDays(-2)));
-
             list.Add(new TodoItem("klappa katten", "Husdjur", today.AddDays(-1), true));
+            list.Add(new TodoItem("mickes födelsedag", "Kompisar", today.AddDays(85)));
+            list.Add(new TodoItem("förnya pendlingskortet", "Jobb", today.AddDays(21)));
+            list.Add(new TodoItem("köp kattmat", "Husdjur", today.AddDays(-2)));
             list.Add(new TodoItem("gå ut med hunden", "Husdjur", today.AddDays(0), true));
         }
 
@@ -69,6 +72,9 @@ namespace TodoApp
         private void bt_ClearList_Click(object sender, RoutedEventArgs e)
         {
             list.Clear();
+            tb_Search.Text = "";
+            lv_List.Items.Filter = null;
+
             lv_List.Items.Refresh();
         }
 
@@ -89,6 +95,7 @@ namespace TodoApp
 
             foreach (var item in query)    item.IsDone = newState;
 
+            list.Sort();
             lv_List.Items.Refresh();
         }
 
@@ -99,6 +106,7 @@ namespace TodoApp
             list.Add(new TodoItem(tb_Description.Text, tb_Category.Text, dt));
 
             lv_List.SelectedItem = list.Last();
+            list.Sort();
             lv_List.Items.Refresh();
         }
 
@@ -122,7 +130,15 @@ namespace TodoApp
         {
             var words = tb_Search.Text.Trim().ToLower().Split();
 
-            lv_List.Items.Filter = item => words.Any(((item as TodoItem)!.Description + " " + (item as TodoItem)!.Category).ToLower().Contains);
+            if (words[0] == "")
+            {
+                lv_List.Items.Filter = null;
+            }
+            else
+            {
+                lv_List.Items.Filter = item => words.Any(((item as TodoItem)!.Description + " " + (item as TodoItem)!.Category).ToLower().Contains);
+            }
+
             lv_List.Items.Refresh();
         }
     }
